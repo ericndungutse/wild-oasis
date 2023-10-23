@@ -1,3 +1,4 @@
+import { Suspense, lazy } from 'react';
 import {
   BrowserRouter,
   Navigate,
@@ -9,12 +10,13 @@ import Cabins from './pages/Cabins';
 import Bookings from './pages/Bookings';
 import Account from './pages/Account';
 import Login from './pages/Login';
-import Settings from './pages/Settings';
+// import Settings from './pages/Settings';
 import Users from './pages/Users';
 import PageNotFound from './pages/PageNotFound';
 import GlobalStyles from './styles/GlobalStyles';
 import AppLayout from './ui/AppLayout';
 
+const Settings = lazy(() => import('./pages/Settings'));
 function App() {
   return (
     <>
@@ -28,12 +30,19 @@ function App() {
             />
             <Route path='dashboard' element={<Dashboard />} />
             <Route path='cabins' element={<Cabins />} />
-            <Route path='login' element={<Login />} />
             <Route path='bookings' element={<Bookings />} />
-            <Route path='settings' element={<Settings />} />
+            <Route
+              path='settings'
+              element={
+                <Suspense fallback={<h1>Wait...</h1>}>
+                  <Settings />
+                </Suspense>
+              }
+            />
             <Route path='account' element={<Account />} />
+            <Route path='users' element={<Users />} />
           </Route>
-          <Route path='users' element={<Users />} />
+          <Route path='login' element={<Login />} />
           <Route path='*' element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>
