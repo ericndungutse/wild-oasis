@@ -25,7 +25,7 @@ const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       // Amount of time data in cache will stay valid to e refetched again
-      staleTime: 60 * 1000,
+      staleTime: 0,
     },
   },
 });
