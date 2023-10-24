@@ -16,7 +16,7 @@ export async function deleteCabin(id) {
   const { data, error } = await supabase
     .from('cabins')
     .delete()
-    .eq('jnksdkja', id);
+    .eq('id', id);
 
   if (error) {
     throw new Error(error.message);
