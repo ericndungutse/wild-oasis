@@ -19,7 +19,12 @@ export async function deleteCabin(id) {
     .eq('id', id);
 
   if (error) {
-    throw new Error(error.message);
+    let message = error.message;
+
+    if (error.code === '23503')
+      message =
+        'Cannot delete cabin. It is carrently booked by one of your guests.';
+    throw new Error(message);
   }
 
   return data;
@@ -71,7 +76,7 @@ export async function createEditCabin(newCabin, id) {
 
   // 3. Delete Cabin there was an error uploading the image
   if (storageError) {
-    await supabase.from('cabins').delete().eq('id', data.id);
+    await supabase.from('cabins').delete().eq('id', data?.id);
     throw new Error('Cabin image could not be uploaded');
   }
 

@@ -55,6 +55,10 @@ const Button = styled.button`
 
   ${(props) => sizes[props.size]}
   ${(props) => variations[props.variation]}
+
+  &:disabled {
+    opacity: 0.5;
+  }
 `;
 
 Button.defaultProps = {

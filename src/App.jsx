@@ -73,9 +73,10 @@ function App() {
           },
           style: {
             fontSize: '16px',
+            textAlign: 'center',
             maxWidth: '500px',
             padding: '16px 24px',
-            backgroundColor: 'var(--color-grey-0)',
+            backgroundColor: 'var(--color-grey-50)',
             color: 'var(--color-grey-700)',
           },
         }}
