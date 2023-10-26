@@ -8,7 +8,7 @@ import Textarea from '../../ui/Textarea';
 import FormRow from '../../ui/FormRow';
 import { useUpdateCabin, useCreateCabin } from './cabinHooks';
 
-function CreateCabinForm({ cabinToEdit = {} }) {
+function CreateCabinForm({ cabinToEdit = {}, onCloseModel }) {
   const { id: editId, ...editValues } = cabinToEdit;
   const isEditSession = Boolean(editId);
 
@@ -30,12 +30,22 @@ function CreateCabinForm({ cabinToEdit = {} }) {
     if (isEditSession) {
       editCabin({ newCabinData: { ...data, image }, id: editId });
     } else {
-      createCabin({ ...data, image }, { onSuccess: () => reset() });
+      createCabin(
+        { ...data, image },
+        {
+          onSuccess: () => {
+            reset();
+            onCloseModel?.();
+          },
+        }
+      );
     }
   }
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
+    <Form
+      onSubmit={handleSubmit(onSubmit)}
+      type={onCloseModel ? 'modal' : 'regular'}>
       <FormRow
         label='Cabin name'
         error={errors?.name && errors?.name?.message}>
@@ -137,7 +147,10 @@ function CreateCabinForm({ cabinToEdit = {} }) {
 
       <FormRow>
         {/* type is an HTML attribute! */}
-        <Button variation='secondary' type='reset'>
+        <Button
+          variation='secondary'
+          type='reset'
+          onClick={() => onCloseModel?.()}>
           Cancel
         </Button>
         <Button disabled={isWorking}>
