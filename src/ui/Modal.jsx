@@ -9,6 +9,7 @@ import {
 import { createPortal } from 'react-dom';
 import { HiXMark } from 'react-icons/hi2';
 import styled from 'styled-components';
+import useOutSideClick from '../hooks/useOutSideClick';
 
 const StyledModal = styled.div`
   position: fixed;
@@ -89,24 +90,11 @@ function Open({ children, opens: openWindowName }) {
 
 function Window({ children, modalName }) {
   const { openName, close } = useContext(modalContext);
-  const ref = useRef();
 
-  useEffect(() => {
-    function handleClick(e) {
-      if (ref.current && !ref?.current?.contains?.(e.target)) {
-        close();
-      }
-    }
-
-    document.addEventListener('click', handleClick, true);
-
-    return () => {
-      document.removeEventListener('click', handleClick, true);
-    };
-  }, [close]);
+  const ref = useOutSideClick(close, true);
 
   if (modalName !== openName) return;
-  return (
+  return createPortal(
     <Overlay>
       <StyledModal ref={ref}>
         <Button onClick={close}>
@@ -114,7 +102,8 @@ function Window({ children, modalName }) {
         </Button>
         {cloneElement(children, { onCloseModel: close })}
       </StyledModal>
-    </Overlay>
+    </Overlay>,
+    document.body
   );
 }
 
