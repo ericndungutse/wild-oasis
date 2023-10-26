@@ -6,10 +6,7 @@ import Button from '../../ui/Button';
 import FileInput from '../../ui/FileInput';
 import Textarea from '../../ui/Textarea';
 import FormRow from '../../ui/FormRow';
-import {
-  useUpdateCabin,
-  useCreateCabin,
-} from '../../hooks/cabinHooks';
+import { useUpdateCabin, useCreateCabin } from './cabinHooks';
 
 function CreateCabinForm({ cabinToEdit = {} }) {
   const { id: editId, ...editValues } = cabinToEdit;

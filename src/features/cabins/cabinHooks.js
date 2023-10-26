@@ -7,7 +7,7 @@ import {
   createEditCabin,
   deleteCabin as deleteCabinApi,
   getCabins,
-} from '../services/apiCabins';
+} from '../../services/apiCabins';
 import toast from 'react-hot-toast';
 
 //  Fetch Cabins

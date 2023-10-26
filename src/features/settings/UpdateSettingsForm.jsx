@@ -1,16 +1,30 @@
+import { useForm } from 'react-hook-form';
 import Form from '../../ui/Form';
 import FormRow from '../../ui/FormRow';
 import Input from '../../ui/Input';
 import { useSettings } from './useSettings';
+import { useUpdateSetting } from './useUpdateSetting';
 
 function UpdateSettingsForm() {
   const { isLoading, settings = {} } = useSettings();
+  const { isUpdating, updateSetting } = useUpdateSetting();
+
   const {
     minBookingLength,
     breakfastPrice,
     maxBookingLength,
     maxGuestsPerBooking,
   } = settings;
+
+  function handleOnBlur(e, field) {
+    const { value } = e.target;
+    console.log(field);
+
+    if (!value) return;
+    updateSetting({
+      [field]: value,
+    });
+  }
 
   return (
     <Form>
@@ -19,7 +33,8 @@ function UpdateSettingsForm() {
           type='number'
           id='min-nights'
           defaultValue={minBookingLength}
-          disabled={isLoading}
+          disabled={isLoading || isUpdating}
+          onBlur={(e) => handleOnBlur(e, 'minBookingLength')}
         />
       </FormRow>
       <FormRow label='Maximum nights/booking'>
@@ -27,7 +42,8 @@ function UpdateSettingsForm() {
           type='number'
           id='max-nights'
           defaultValue={maxBookingLength}
-          disabled={isLoading}
+          disabled={isLoading || isUpdating}
+          onBlur={(e) => handleOnBlur(e, 'maxBookingLength')}
         />
       </FormRow>
       <FormRow label='Maximum guests/booking'>
@@ -35,7 +51,8 @@ function UpdateSettingsForm() {
           type='number'
           id='max-guests'
           defaultValue={maxGuestsPerBooking}
-          disabled={isLoading}
+          disabled={isLoading || isUpdating}
+          onBlur={(e) => handleOnBlur(e, 'maxGuestsPerBooking')}
         />
       </FormRow>
       <FormRow label='Breakfast price'>
@@ -43,7 +60,8 @@ function UpdateSettingsForm() {
           type='number'
           id='breakfast-price'
           defaultValue={breakfastPrice}
-          disabled={isLoading}
+          disabled={isLoading || isUpdating}
+          onBlur={(e) => handleOnBlur(e, 'breakfastPrice')}
         />
       </FormRow>
     </Form>

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import Spinner from '../../ui/Spinner';
 import CabinRow from './CabinRow';
-import { useFetchCabins } from '../../hooks/cabinHooks';
+import { useFetchCabins } from './cabinHooks';
 
 const Table = styled.div`
   border: 1px solid var(--color-grey-200);
