@@ -81,7 +81,7 @@ function CreateCabinForm({ cabinToEdit = {}, onCloseModel }) {
       <FormRow
         label='Regular price'
         error={
-          errors['regularProce'] && errors['regularProce'].message
+          errors['regularPrice'] && errors['regularPrice'].message
         }>
         <Input
           type='number'
