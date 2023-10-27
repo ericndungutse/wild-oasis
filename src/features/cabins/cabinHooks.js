@@ -76,7 +76,10 @@ export function useDeleteCabin() {
       });
     },
 
-    onError: (err) => toast.error(err.message),
+    onError: (err) => {
+      console.log(err);
+      toast.error(err.message);
+    },
   });
 
   return { isDeleting, deleteCabin };

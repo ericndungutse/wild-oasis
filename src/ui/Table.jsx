@@ -65,9 +65,7 @@ const TableContext = createContext();
 function Table({ columns, children }) {
   return (
     <TableContext.Provider value={{ columns }}>
-      <StyledTable role='table' as='table'>
-        {children}
-      </StyledTable>
+      <StyledTable role='table'>{children}</StyledTable>
     </TableContext.Provider>
   );
 }
@@ -75,7 +73,7 @@ const Header = ({ children }) => {
   const { columns } = useContext(TableContext);
 
   return (
-    <StyledHeader role='row' as='tableHeader' columns={columns}>
+    <StyledHeader role='row' columns={columns}>
       {children}
     </StyledHeader>
   );
@@ -92,7 +90,7 @@ const Row = ({ children }) => {
 
 const Body = ({ data, render }) => {
   if (!data.length) return <Empty>No data found</Empty>;
-  return <StyledBody as='tableBody'>{data.map(render)}</StyledBody>;
+  return <StyledBody>{data.map(render)}</StyledBody>;
 };
 
 Table.Header = Header;
