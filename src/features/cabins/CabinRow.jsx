@@ -6,18 +6,19 @@ import CreateCubinForm from './CreateCabinForm';
 import { useCreateCabin, useDeleteCabin } from './cabinHooks';
 import Modal from '../../ui/Modal';
 import ConfirmDelete from '../../ui/ConfirmDelete';
+import Table from '../../ui/Table';
 
-const TableRow = styled.div`
-  display: grid;
-  grid-template-columns: 0.6fr 1.8fr 2.2fr 1fr 1fr 1fr;
-  column-gap: 2.4rem;
-  align-items: center;
-  padding: 1.4rem 2.4rem;
+// const TableRow = styled.div`
+//   display: grid;
+//   grid-template-columns: 0.6fr 1.8fr 2.2fr 1fr 1fr 1fr;
+//   column-gap: 2.4rem;
+//   align-items: center;
+//   padding: 1.4rem 2.4rem;
 
-  &:not(:last-child) {
-    border-bottom: 1px solid var(--color-grey-100);
-  }
-`;
+//   &:not(:last-child) {
+//     border-bottom: 1px solid var(--color-grey-100);
+//   }
+// `;
 
 const Img = styled.img`
   display: block;
@@ -70,52 +71,50 @@ function CabinRow({ cabin }) {
     });
   }
   return (
-    <>
-      <TableRow role='row'>
-        <Img src={image} alt={name} />
-        <Cabin>{name}</Cabin>
-        <div>First up to {maxCapacity} guests</div>
+    <Table.Row>
+      <Img src={image} alt={name} />
+      <Cabin>{name}</Cabin>
+      <div>First up to {maxCapacity} guests</div>
 
-        <Price>{formatCurrency(regularPrice)}</Price>
-        {discount ? (
-          <Discount>{discount}</Discount>
-        ) : (
-          <span>&mdash;</span>
-        )}
-        <div>
-          <button disabled={isCreating} onClick={handleDuplicate}>
-            <HiSquare2Stack />
-          </button>
+      <Price>{formatCurrency(regularPrice)}</Price>
+      {discount ? (
+        <Discount>{discount}</Discount>
+      ) : (
+        <span>&mdash;</span>
+      )}
+      <div>
+        <button disabled={isCreating} onClick={handleDuplicate}>
+          <HiSquare2Stack />
+        </button>
 
-          <Modal>
-            <Modal.Open opens='edit'>
-              <button>
-                <HiPencil />
-              </button>
-            </Modal.Open>
-            <Modal.Window modalName='edit'>
-              <CreateCubinForm cabinToEdit={cabin} />
-            </Modal.Window>
-          </Modal>
+        <Modal>
+          <Modal.Open opens='edit'>
+            <button>
+              <HiPencil />
+            </button>
+          </Modal.Open>
+          <Modal.Window modalName='edit'>
+            <CreateCubinForm cabinToEdit={cabin} />
+          </Modal.Window>
+        </Modal>
 
-          <Modal>
-            <Modal.Open opens='delete'>
-              <button>
-                <HiTrash />
-              </button>
-            </Modal.Open>
+        <Modal>
+          <Modal.Open opens='delete'>
+            <button>
+              <HiTrash />
+            </button>
+          </Modal.Open>
 
-            <Modal.Window modalName='delete'>
-              <ConfirmDelete
-                resourceName='cabin'
-                onConfirm={deleteCabin}
-                disabled={isDeleting}
-              />
-            </Modal.Window>
-          </Modal>
-        </div>
-      </TableRow>
-    </>
+          <Modal.Window modalName='delete'>
+            <ConfirmDelete
+              resourceName='cabin'
+              onConfirm={deleteCabin}
+              disabled={isDeleting}
+            />
+          </Modal.Window>
+        </Modal>
+      </div>
+    </Table.Row>
   );
 }
 
