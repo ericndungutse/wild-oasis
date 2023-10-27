@@ -38,6 +38,7 @@ function Filter({ filterValue, options }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const filteredBy =
     searchParams.get(filterValue) || options.at(0).value;
+
   function handleClick(value) {
     searchParams.set(filterValue, value);
     setSearchParams(searchParams);
