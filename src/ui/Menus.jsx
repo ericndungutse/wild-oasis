@@ -90,7 +90,6 @@ function Toggle({ id }) {
 
   function handleClick(e) {
     const rect = e.target.closest('button').getBoundingClientRect();
-    console.log(rect, window.innerWidth);
 
     setPosition({
       x: window.innerWidth - rect.x - rect.width,
