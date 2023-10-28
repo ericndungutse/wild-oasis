@@ -15,11 +15,20 @@ function BookingTable() {
 
   const filterBy = searchParams.get('status') || 'all';
 
-  let filteredBookings;
-
-  filteredBookings = bookings.filter((booking) => {
+  let filteredBookings = bookings.filter((booking) => {
     if (filterBy === 'all') return booking;
     return booking.status === filterBy;
+  });
+
+  const sortByValue = searchParams.get('sortBy') || 'startDate-desc';
+
+  const [field, direction] = sortByValue.split('-');
+  const modifier = direction === 'asc' ? 1 : -1;
+
+  let sortedBookings = filteredBookings.sort((a, b) => {
+    if (a[field] < b[field]) return -1 * modifier;
+    if (a[field] > b[field]) return 1 * modifier;
+    return 0;
   });
 
   return (
@@ -35,7 +44,7 @@ function BookingTable() {
         </Table.Header>
 
         <Table.Body
-          data={filteredBookings}
+          data={sortedBookings}
           render={(booking) => (
             <BookingRow key={booking.id} booking={booking} />
           )}

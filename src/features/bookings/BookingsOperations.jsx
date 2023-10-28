@@ -31,11 +31,11 @@ function BookingsOperations() {
       <SortBy
         options={[
           {
-            value: 'startDate-asc',
+            value: 'startDate-desc',
             label: 'Sort by date (recent first)',
           },
           {
-            value: 'startDate-desc',
+            value: 'startDate-asc',
             label: 'Sort by date (earlier first)',
           },
           {
