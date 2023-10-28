@@ -48,12 +48,13 @@ function Filter({ filterValue, options }) {
     <StyledFilter>
       {/* Use Render Prop pattern to customize the Filter button */}
       {options.map((option) => {
+        const isactive = filteredBy === option.value;
         return (
           <FilterButton
-            active={filteredBy === option.value}
             key={option.value}
             disabled={filteredBy === option.value}
-            onClick={() => handleClick(option.value)}>
+            onClick={() => handleClick(option.value)}
+            active={isactive}>
             {option.label}
           </FilterButton>
         );
