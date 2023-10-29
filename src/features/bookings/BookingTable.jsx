@@ -8,28 +8,29 @@ import { useSearchParams } from 'react-router-dom';
 
 function BookingTable() {
   const [isLoading, bookings] = useFetchBookings();
-  const [searchParams] = useSearchParams();
 
   if (isLoading) return <Spinner />;
   if (!bookings?.length) return <Empty resourceName='bookings' />;
 
-  const filterBy = searchParams.get('status') || 'all';
+  // CLIENT SIDE FILTERING AND SORTING
 
-  let filteredBookings = bookings.filter((booking) => {
-    if (filterBy === 'all') return booking;
-    return booking.status === filterBy;
-  });
+  // const filterBy = searchParams.get('status') || 'all';
 
-  const sortByValue = searchParams.get('sortBy') || 'startDate-desc';
+  // let filteredBookings = bookings.filter((booking) => {
+  //   if (filterBy === 'all') return booking;
+  //   return booking.status === filterBy;
+  // });
 
-  const [field, direction] = sortByValue.split('-');
-  const modifier = direction === 'asc' ? 1 : -1;
+  // const sortByValue = searchParams.get('sortBy') || 'startDate-desc';
 
-  let sortedBookings = filteredBookings.sort((a, b) => {
-    if (a[field] < b[field]) return -1 * modifier;
-    if (a[field] > b[field]) return 1 * modifier;
-    return 0;
-  });
+  // const [field, direction] = sortByValue.split('-');
+  // const modifier = direction === 'asc' ? 1 : -1;
+
+  // let sortedBookings = filteredBookings.sort((a, b) => {
+  //   if (a[field] < b[field]) return -1 * modifier;
+  //   if (a[field] > b[field]) return 1 * modifier;
+  //   return 0;
+  // });
 
   return (
     <Menus>
@@ -44,7 +45,7 @@ function BookingTable() {
         </Table.Header>
 
         <Table.Body
-          data={sortedBookings}
+          data={bookings}
           render={(booking) => (
             <BookingRow key={booking.id} booking={booking} />
           )}

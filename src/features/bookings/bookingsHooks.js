@@ -10,17 +10,28 @@ import {
 } from '../../services/apiCabins';
 import toast from 'react-hot-toast';
 import { getBookings } from '../../services/apiBookings';
+import { useSearchParams } from 'react-router-dom';
 
 //  Fetch Cabins
 export function useFetchBookings() {
+  const [searchParams] = useSearchParams();
+  const filterValue = searchParams.get('status');
+
+  const filterObj = {};
+  if (!filterValue || filterValue === 'all') {
+    filterObj.value = null;
+  } else {
+    filterObj.value = filterValue;
+  }
+
   // Load
   const {
     isLoading,
     data: bookings,
     error,
   } = useQuery({
-    queryKey: ['bookings'],
-    queryFn: getBookings,
+    queryKey: ['bookings', filterObj],
+    queryFn: () => getBookings(filterObj),
   });
 
   return [isLoading, bookings, error];

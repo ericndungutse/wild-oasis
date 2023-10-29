@@ -1,10 +1,14 @@
 import supabase from './superbase';
 import { getToday } from '../utils/helpers';
 
-export async function getBookings() {
-  const { data, error } = await supabase
+export async function getBookings(filter) {
+  let query = supabase
     .from('bookings')
     .select('*, cabins(*), guests(*))');
+
+  if (filter.value !== null) query = query.eq('status', filter.value);
+
+  const { data, error } = await query;
 
   if (error) {
     throw new Error('B ookings could not be loaded');

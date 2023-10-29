@@ -42,6 +42,8 @@ function Filter({ filterValue, options }) {
   function handleClick(value) {
     searchParams.set(filterValue, value);
     setSearchParams(searchParams);
+
+    console.log([...searchParams]);
   }
 
   return (
