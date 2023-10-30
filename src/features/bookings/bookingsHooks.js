@@ -24,14 +24,20 @@ export function useFetchBookings() {
     filterObj.value = filterValue;
   }
 
+  const sortRow = searchParams.get('sortBy') || 'startDate-desc';
+
+  const [field, direction] = sortRow.split('-');
+
+  const sortBy = { field, direction };
+
   // Load
   const {
     isLoading,
     data: bookings,
     error,
   } = useQuery({
-    queryKey: ['bookings', filterObj],
-    queryFn: () => getBookings(filterObj),
+    queryKey: ['bookings', filterObj, sortBy],
+    queryFn: () => getBookings(filterObj, sortBy),
   });
 
   return [isLoading, bookings, error];
