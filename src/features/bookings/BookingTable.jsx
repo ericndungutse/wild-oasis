@@ -4,11 +4,10 @@ import Menus from '../../ui/Menus';
 import Empty from '../../ui/Empty';
 import Spinner from '../../ui/Spinner';
 import { useFetchBookings } from './bookingsHooks';
-import { useSearchParams } from 'react-router-dom';
 import Pagination from '../../ui/Pagination';
 
 function BookingTable() {
-  const [isLoading, bookings] = useFetchBookings();
+  const [isLoading, bookings, count] = useFetchBookings();
 
   if (isLoading) return <Spinner />;
   if (!bookings?.length) return <Empty resourceName='bookings' />;
@@ -53,7 +52,7 @@ function BookingTable() {
         />
 
         <Table.Footer>
-          <Pagination count={45} />
+          <Pagination count={Number(count)} />
         </Table.Footer>
       </Table>
     </Menus>

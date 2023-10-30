@@ -17,6 +17,7 @@ export function useFetchBookings() {
   const [searchParams] = useSearchParams();
   const filterValue = searchParams.get('status');
 
+  // Filter
   const filterObj = {};
   if (!filterValue || filterValue === 'all') {
     filterObj.value = null;
@@ -24,23 +25,29 @@ export function useFetchBookings() {
     filterObj.value = filterValue;
   }
 
+  // Sort
   const sortRow = searchParams.get('sortBy') || 'startDate-desc';
 
   const [field, direction] = sortRow.split('-');
 
   const sortBy = { field, direction };
 
+  // Pagination
+  const page = !searchParams.get('page')
+    ? 1
+    : Number(searchParams.get('page'));
+
   // Load
   const {
     isLoading,
-    data: bookings,
+    data: { data: bookings, count } = {},
     error,
   } = useQuery({
-    queryKey: ['bookings', filterObj, sortBy],
-    queryFn: () => getBookings(filterObj, sortBy),
+    queryKey: ['bookings', filterObj, sortBy, page],
+    queryFn: () => getBookings(filterObj, sortBy, page),
   });
 
-  return [isLoading, bookings, error];
+  return [isLoading, bookings, count, error];
 }
 
 // Create Cabin
