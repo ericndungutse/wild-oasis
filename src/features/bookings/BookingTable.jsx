@@ -5,6 +5,7 @@ import Empty from '../../ui/Empty';
 import Spinner from '../../ui/Spinner';
 import { useFetchBookings } from './bookingsHooks';
 import { useSearchParams } from 'react-router-dom';
+import Pagination from '../../ui/Pagination';
 
 function BookingTable() {
   const [isLoading, bookings] = useFetchBookings();
@@ -50,6 +51,10 @@ function BookingTable() {
             <BookingRow key={booking.id} booking={booking} />
           )}
         />
+
+        <Table.Footer>
+          <Pagination count={45} />
+        </Table.Footer>
       </Table>
     </Menus>
   );
