@@ -11,9 +11,11 @@ import {
 import toast from 'react-hot-toast';
 import { getBookings } from '../../services/apiBookings';
 import { useSearchParams } from 'react-router-dom';
+import { PAGE_SIZE } from '../../utils/constants';
 
 //  Fetch Cabins
 export function useFetchBookings() {
+  const queryClient = useQueryClient();
   const [searchParams] = useSearchParams();
   const filterValue = searchParams.get('status');
 
@@ -37,7 +39,7 @@ export function useFetchBookings() {
     ? 1
     : Number(searchParams.get('page'));
 
-  // Load
+  // QUERY
   const {
     isLoading,
     data: { data: bookings, count } = {},
@@ -46,6 +48,19 @@ export function useFetchBookings() {
     queryKey: ['bookings', filterObj, sortBy, page],
     queryFn: () => getBookings(filterObj, sortBy, page),
   });
+
+  // PREFETCH
+  const pageCount = Math.ceil(count / PAGE_SIZE);
+  if (page < pageCount)
+    queryClient.prefetchQuery({
+      queryKey: ['bookings', filterObj, sortBy, page + 1],
+      queryFn: () => getBookings(filterObj, sortBy, page + 1),
+    });
+  if (page > 1)
+    queryClient.prefetchQuery({
+      queryKey: ['bookings', filterObj, sortBy, page - 1],
+      queryFn: () => getBookings(filterObj, sortBy, page - 1),
+    });
 
   return [isLoading, bookings, count, error];
 }
