@@ -3,17 +3,17 @@ import {
   useQuery,
   useQueryClient,
 } from '@tanstack/react-query';
-import {
-  createEditCabin,
-  deleteCabin as deleteCabinApi,
-  getCabins,
-} from '../../services/apiCabins';
+import { createEditCabin } from '../../services/apiCabins';
 import toast from 'react-hot-toast';
-import { getBookings } from '../../services/apiBookings';
-import { useSearchParams } from 'react-router-dom';
+import {
+  deleteBooking as deleteBookingApi,
+  getBooking,
+  getBookings,
+} from '../../services/apiBookings';
+import { useParams, useSearchParams } from 'react-router-dom';
 import { PAGE_SIZE } from '../../utils/constants';
 
-//  Fetch Cabins
+//  Fetch Bookings
 export function useFetchBookings() {
   const queryClient = useQueryClient();
   const [searchParams] = useSearchParams();
@@ -65,65 +65,42 @@ export function useFetchBookings() {
   return [isLoading, bookings, count, error];
 }
 
-// Create Cabin
-export function useCreateCabin(reet) {
-  const queryClient = useQueryClient();
+export function useGetBooking() {
+  const { id } = useParams();
 
-  // Create Cabin
-  const { isLoading: isCreating, mutate: createCabin } = useMutation({
-    mutationFn: createEditCabin,
-    onSuccess: () => {
-      toast.success('Cabin uccessfully created');
-      queryClient.invalidateQueries({
-        queryKey: ['cabins'],
-      });
-    },
-    onError: (err) => toast.error(err.message),
+  const {
+    isLoading: isGettingBooking,
+    data: booking,
+    error,
+  } = useQuery({
+    queryKey: [`booking-${id}`],
+    queryFn: () => getBooking(id),
+    retry: false,
   });
 
-  return { isCreating, createCabin };
+  if (error) throw new Error('Error getting booking!');
+
+  return [isGettingBooking, booking];
 }
 
-// Update Cabin
-export function useUpdateCabin() {
-  const queryClient = useQueryClient();
-
-  // Edit
-  const { isLoading: isEditing, mutate: editCabin } = useMutation({
-    mutationFn: ({ newCabinData, id }) =>
-      createEditCabin(newCabinData, id),
-    onSuccess: () => {
-      toast.success('Cabin uccessfully updated');
-      queryClient.invalidateQueries({
-        queryKey: ['cabins'],
-      });
-    },
-    onError: (err) => toast.error(err.message),
-  });
-
-  return {
-    isEditing,
-    editCabin,
-  };
-}
-
-// Delete Cabin
-export function useDeleteCabin() {
+// Delete Booking
+export function useDeleteBooking() {
   const queryClient = useQueryClient();
   // Delete
-  const { isLoading: isDeleting, mutate: deleteCabin } = useMutation({
-    mutationFn: deleteCabinApi,
-    onSuccess: () => {
-      toast.success('Cabin successfully deleted.');
-      queryClient.invalidateQueries({
-        queryKey: ['cabins'],
-      });
-    },
+  const { isLoading: isDeleting, mutate: deleteBooking } =
+    useMutation({
+      mutationFn: deleteBookingApi,
+      onSuccess: () => {
+        toast.success('Booking successfully deleted.');
+        queryClient.invalidateQueries({
+          queryKey: ['bookings'],
+        });
+      },
 
-    onError: (err) => {
-      toast.error(err.message);
-    },
-  });
+      onError: (err) => {
+        toast.error(err.message);
+      },
+    });
 
-  return { isDeleting, deleteCabin };
+  return { isDeleting, deleteBooking };
 }

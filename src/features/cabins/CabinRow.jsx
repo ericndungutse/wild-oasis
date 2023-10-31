@@ -8,6 +8,7 @@ import Modal from '../../ui/Modal';
 import ConfirmDelete from '../../ui/ConfirmDelete';
 import Table from '../../ui/Table';
 import Menus from '../../ui/Menus';
+import Button from '../../ui/Button';
 
 // const TableRow = styled.div`
 //   display: grid;

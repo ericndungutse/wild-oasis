@@ -58,7 +58,7 @@ const Button = styled.button`
   }
 `;
 
-const modalContext = createContext();
+export const modalContext = createContext();
 
 function Modal({ children }) {
   const [openName, setOpenName] = useState('');
@@ -68,6 +68,7 @@ function Modal({ children }) {
   };
 
   const open = (openNameWindow) => {
+    console.log('opens', openNameWindow);
     setOpenName(openNameWindow);
   };
 
