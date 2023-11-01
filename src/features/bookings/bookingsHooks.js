@@ -10,7 +10,6 @@ import {
   deleteBooking as deleteBookingApi,
   getBooking,
   getBookings,
-  updateBooking as updateBookingApi,
 } from '../../services/apiBookings';
 import { PAGE_SIZE } from '../../utils/constants';
 

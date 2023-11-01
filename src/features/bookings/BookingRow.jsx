@@ -130,15 +130,15 @@ function BookingRow({
               </Menus.Button>
             </Modal.Open>
           </Menus.List>
-
-          <Modal.Window modalName='delete'>
-            <ConfirmDelete
-              resourceName='booking'
-              onConfirm={() => deleteBooking(bookingId)}
-              disabled={isDeleting}
-            />
-          </Modal.Window>
         </Menus.Menu>
+
+        <Modal.Window modalName='delete'>
+          <ConfirmDelete
+            resourceName='booking'
+            onConfirm={() => deleteBooking(bookingId)}
+            disabled={isDeleting}
+          />
+        </Modal.Window>
       </Modal>
     </Table.Row>
   );
