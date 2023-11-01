@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 import { format, isToday } from 'date-fns';
-import { HiArrowDownOnSquare, HiEye, HiTrash } from 'react-icons/hi2';
+import {
+  HiArrowDownOnSquare,
+  HiArrowUpOnSquare,
+  HiEye,
+  HiTrash,
+} from 'react-icons/hi2';
 import { useNavigate } from 'react-router-dom';
 
 import Tag from '../../ui/Tag';
@@ -11,6 +16,7 @@ import Menus from '../../ui/Menus';
 import Modal from '../../ui/Modal';
 import ConfirmDelete from '../../ui/ConfirmDelete';
 import { useDeleteBooking } from './bookingsHooks';
+import { useCheckout } from '../check-in-out/hooks/useCheckOut';
 
 const Cabin = styled.div`
   font-size: 1.6rem;
@@ -55,6 +61,7 @@ function BookingRow({
 }) {
   const { isDeleting, deleteBooking } = useDeleteBooking();
   const navigate = useNavigate();
+  const { isCheckingOut, checkOut } = useCheckout();
 
   const statusToTagName = {
     unconfirmed: 'blue',
@@ -106,6 +113,14 @@ function BookingRow({
                 icon={<HiArrowDownOnSquare />}
                 onClick={() => navigate(`/checkin/${bookingId}`)}>
                 Check in
+              </Menus.Button>
+            )}
+            {status === 'checked-in' && (
+              <Menus.Button
+                disabled={isCheckingOut}
+                icon={<HiArrowUpOnSquare />}
+                onClick={() => checkOut(bookingId)}>
+                Check out
               </Menus.Button>
             )}
 
