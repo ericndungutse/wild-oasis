@@ -3,14 +3,15 @@ import {
   useQuery,
   useQueryClient,
 } from '@tanstack/react-query';
-import { createEditCabin } from '../../services/apiCabins';
 import toast from 'react-hot-toast';
+import { useParams, useSearchParams } from 'react-router-dom';
+
 import {
   deleteBooking as deleteBookingApi,
   getBooking,
   getBookings,
+  updateBooking as updateBookingApi,
 } from '../../services/apiBookings';
-import { useParams, useSearchParams } from 'react-router-dom';
 import { PAGE_SIZE } from '../../utils/constants';
 
 //  Fetch Bookings
@@ -65,6 +66,7 @@ export function useFetchBookings() {
   return [isLoading, bookings, count, error];
 }
 
+// Get Booking
 export function useGetBooking() {
   const { id } = useParams();
 
@@ -73,7 +75,8 @@ export function useGetBooking() {
     data: booking,
     error,
   } = useQuery({
-    queryKey: [`booking-${id}`],
+    // queryKey: [`booking-${id}`],
+    queryKey: ['booking', id],
     queryFn: () => getBooking(id),
     retry: false,
   });
