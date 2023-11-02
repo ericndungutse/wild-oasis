@@ -5,17 +5,26 @@ import Input from '../../ui/Input';
 import FormRowVertical from '../../ui/FormRowVertical';
 import { useLogin } from './authHooks';
 import SpinnerMini from '../../ui/SpinnerMini';
+import { set } from 'date-fns';
 
 function LoginForm() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('eric@example.com');
+  const [password, setPassword] = useState('Test123');
   const { isLoggingIn, login } = useLogin();
 
   async function handleSubmit(e) {
     e.preventDefault();
     if (!email || !password) return;
 
-    login({ email, password });
+    login(
+      { email, password },
+      {
+        onSettled: () => {
+          setEmail('');
+          setPassword('');
+        },
+      }
+    );
   }
 
   return (
