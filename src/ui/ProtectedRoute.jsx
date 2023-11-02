@@ -1,8 +1,8 @@
 import { Navigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { useUser } from '../features/authentication/useUser';
 import Spinner from './Spinner';
+import { useUser } from '../features/authentication/authHooks';
 
 const FullPage = styled.div`
   height: 100dvh;
