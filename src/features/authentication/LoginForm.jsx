@@ -5,7 +5,6 @@ import Input from '../../ui/Input';
 import FormRowVertical from '../../ui/FormRowVertical';
 import { useLogin } from './authHooks';
 import SpinnerMini from '../../ui/SpinnerMini';
-import { set } from 'date-fns';
 
 function LoginForm() {
   const [email, setEmail] = useState('eric@example.com');
