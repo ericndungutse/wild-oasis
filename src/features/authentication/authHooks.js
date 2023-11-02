@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import {
   login as loginApi,
   logout as logOutApi,
+  signup as signupApi,
 } from '../../services/apiAuth';
 import toast from 'react-hot-toast';
 import { getCurrentUser } from '../../services/apiAuth';
@@ -11,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 export function useLogin() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+
   const { isLoading: isLoggingIn, mutate: login } = useMutation({
     mutationFn: ({ email, password }) =>
       loginApi({ email, password }),
@@ -52,4 +54,22 @@ export function useLogOut() {
   });
 
   return { isLogingOut, logOut };
+}
+
+export function useSignup() {
+  const { isLoading: isSigningUp, mutate: signup } = useMutation({
+    mutationFn: signupApi,
+
+    onSuccess: (data) => {
+      toast.success(
+        "Account successfully created! Please verify the new account from the user's email address."
+      );
+    },
+
+    onError: (err) => toast.error(err.message),
+  });
+
+  console.log(isSigningUp, typeof signup);
+
+  return { isSigningUp, signup };
 }
