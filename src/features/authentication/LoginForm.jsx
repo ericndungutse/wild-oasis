@@ -7,8 +7,8 @@ import { useLogin } from './authHooks';
 import SpinnerMini from '../../ui/SpinnerMini';
 
 function LoginForm() {
-  const [email, setEmail] = useState('eric@example.com');
-  const [password, setPassword] = useState('Test123');
+  const [email, setEmail] = useState('dav.ndungutse@gmail.com');
+  const [password, setPassword] = useState('12345678');
   const { isLoggingIn, login } = useLogin();
 
   async function handleSubmit(e) {
