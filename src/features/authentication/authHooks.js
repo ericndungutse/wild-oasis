@@ -4,6 +4,7 @@ import {
   login as loginApi,
   logout as logOutApi,
   signup as signupApi,
+  updateCurrentUser as updateCurrentUserApi,
 } from '../../services/apiAuth';
 import toast from 'react-hot-toast';
 import { getCurrentUser } from '../../services/apiAuth';
@@ -72,4 +73,26 @@ export function useSignup() {
   console.log(isSigningUp, typeof signup);
 
   return { isSigningUp, signup };
+}
+
+// Update User
+export function useUpdateUser() {
+  const queryClient = useQueryClient();
+
+  const { isLoading: isUpdating, mutate: updateCurrentUser } =
+    useMutation({
+      mutationFn: updateCurrentUserApi,
+      onSuccess: () => {
+        toast.success('User successfully updated');
+        queryClient.invalidateQueries({
+          queryKey: ['user'],
+        });
+      },
+      onError: (err) => toast.error(err.message),
+    });
+
+  return {
+    isUpdating,
+    updateCurrentUser,
+  };
 }
