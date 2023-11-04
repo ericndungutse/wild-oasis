@@ -1,4 +1,3 @@
-import { useForm } from 'react-hook-form';
 import Form from '../../ui/Form';
 import FormRow from '../../ui/FormRow';
 import Input from '../../ui/Input';
@@ -18,8 +17,6 @@ function UpdateSettingsForm() {
 
   function handleOnBlur(e, field) {
     const { value } = e.target;
-    console.log(field);
-
     if (!value) return;
     updateSetting({
       [field]: value,

@@ -70,8 +70,6 @@ export function useSignup() {
     onError: (err) => toast.error(err.message),
   });
 
-  console.log(isSigningUp, typeof signup);
-
   return { isSigningUp, signup };
 }
 

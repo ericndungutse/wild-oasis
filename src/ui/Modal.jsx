@@ -68,7 +68,6 @@ function Modal({ children }) {
   };
 
   const open = (openNameWindow) => {
-    console.log('opens', openNameWindow);
     setOpenName(openNameWindow);
   };
 
