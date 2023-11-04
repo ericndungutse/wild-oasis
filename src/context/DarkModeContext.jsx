@@ -19,7 +19,7 @@ function DarkModeProvider({ children }) {
   //   [value, key]
   // );
   const [isDarkMode, setIsDarkMode] = useLocalStorageState(
-    false,
+    window.matchMedia('(prefers-color-scheme: dark').matches,
     'isDarkMode'
   );
 
