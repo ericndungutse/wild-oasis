@@ -74,15 +74,12 @@ export function useGetBooking() {
     data: booking,
     error,
   } = useQuery({
-    // queryKey: [`booking-${id}`],
     queryKey: ['booking', id],
     queryFn: () => getBooking(id),
     retry: false,
   });
 
-  if (error) throw new Error('Error getting booking!');
-
-  return [isGettingBooking, booking];
+  return [isGettingBooking, booking, error];
 }
 
 // Delete Booking
