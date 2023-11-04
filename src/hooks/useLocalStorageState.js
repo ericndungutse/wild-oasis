@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 
 export function useLocalStorageState(initialState, key) {
   const [value, setValue] = useState(function () {
@@ -6,6 +6,8 @@ export function useLocalStorageState(initialState, key) {
     return storedValue ? JSON.parse(storedValue) : initialState;
   });
 
+  // Change Value in local storage when value changes
+  // Similar to use an event handler
   useEffect(
     function () {
       localStorage.setItem(key, JSON.stringify(value));
