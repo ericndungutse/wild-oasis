@@ -1,7 +1,10 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import Heading from "../../ui/Heading";
-import Row from "../../ui/Row";
+import Heading from '../../ui/Heading';
+import Row from '../../ui/Row';
+import { useTodayActivity } from './hooks/useTodayActivity';
+import Spinner from '../../ui/Spinner';
+import TodayItem from './TodayItem';
 
 const StyledToday = styled.div`
   /* Box */
@@ -15,6 +18,7 @@ const StyledToday = styled.div`
   gap: 2.4rem;
   grid-column: 1 / span 2;
   padding-top: 2.4rem;
+  overflow: auto;
 `;
 
 const TodayList = styled.ul`
@@ -36,14 +40,34 @@ const NoActivity = styled.p`
   margin-top: 0.8rem;
 `;
 
-function Today() {
+function TodayActivity() {
+  const { isLoadingActivities, activities } = useTodayActivity();
+
+  if (isLoadingActivities) return <Spinner />;
+
+  console.log(activities);
   return (
     <StyledToday>
-      <Row type="horizontal">
-        <Heading as="h2">Today</Heading>
+      <Row type='horizontal'>
+        <Heading as='h2'>Today</Heading>
+      </Row>
+      <Row>
+        {!isLoadingActivities ? (
+          activities?.length > 0 ? (
+            <TodayList>
+              {activities.map((activity) => (
+                <TodayItem activity={activity} key={activity.id} />
+              ))}
+            </TodayList>
+          ) : (
+            <NoActivity>No Activity today</NoActivity>
+          )
+        ) : (
+          <Spinner />
+        )}
       </Row>
     </StyledToday>
   );
 }
 
-export default Today;
+export default TodayActivity;
