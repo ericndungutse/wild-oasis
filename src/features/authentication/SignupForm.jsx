@@ -15,7 +15,6 @@ function SignupForm() {
   const { errors } = formState;
 
   function onSubmit({ fullName, email, password }) {
-    console.log(signup, isSigningUp);
     signup(
       { fullName, email, password },
       {

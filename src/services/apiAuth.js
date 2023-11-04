@@ -68,7 +68,6 @@ export async function updateCurrentUser({
 
   // 2. Upload the user avatar
   const fileName = `avatar-${data.user.id}-${Math.random()}`;
-  console.log('Avatar', fileName);
 
   const { error: storageError } = await supabase.storage
     .from('avatars')
